@@ -1,0 +1,432 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: WaterSki
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: afa8dd480c9294a49ae328a6a3d57be6, type: 2}
+  sprites:
+  - name: white sprite 64x64
+    outer:
+      serializedVersion: 2
+      x: 1405
+      y: 1391
+      width: 62
+      height: 64
+    inner:
+      serializedVersion: 2
+      x: 1405
+      y: 1391
+      width: 62
+      height: 64
+    paddingLeft: 0.016129032
+    paddingRight: 0.016129032
+    paddingTop: 0
+    paddingBottom: 0
+  - name: crash_0
+    outer:
+      serializedVersion: 2
+      x: 0
+      y: 1194
+      width: 1018
+      height: 854
+    inner:
+      serializedVersion: 2
+      x: 0
+      y: 1194
+      width: 1018
+      height: 854
+    paddingLeft: 0.0009823183
+    paddingRight: 0.0049115913
+    paddingTop: 0.0011709601
+    paddingBottom: 0.19789228
+  - name: red
+    outer:
+      serializedVersion: 2
+      x: 1955
+      y: 1315
+      width: 92
+      height: 92
+    inner:
+      serializedVersion: 2
+      x: 1979
+      y: 1339
+      width: 44
+      height: 44
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: blue
+    outer:
+      serializedVersion: 2
+      x: 1933
+      y: 1188
+      width: 92
+      height: 92
+    inner:
+      serializedVersion: 2
+      x: 1957
+      y: 1212
+      width: 44
+      height: 44
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: green
+    outer:
+      serializedVersion: 2
+      x: 93
+      y: 1101
+      width: 92
+      height: 92
+    inner:
+      serializedVersion: 2
+      x: 117
+      y: 1125
+      width: 44
+      height: 44
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: orange
+    outer:
+      serializedVersion: 2
+      x: 0
+      y: 1008
+      width: 92
+      height: 92
+    inner:
+      serializedVersion: 2
+      x: 24
+      y: 1032
+      width: 44
+      height: 44
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: yellow
+    outer:
+      serializedVersion: 2
+      x: 0
+      y: 1101
+      width: 92
+      height: 92
+    inner:
+      serializedVersion: 2
+      x: 24
+      y: 1125
+      width: 44
+      height: 44
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: WhiteBox
+    outer:
+      serializedVersion: 2
+      x: 1957
+      y: 1472
+      width: 64
+      height: 64
+    inner:
+      serializedVersion: 2
+      x: 1957
+      y: 1472
+      width: 64
+      height: 64
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: change
+    outer:
+      serializedVersion: 2
+      x: 1276
+      y: 1198
+      width: 128
+      height: 128
+    inner:
+      serializedVersion: 2
+      x: 1276
+      y: 1198
+      width: 128
+      height: 128
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: pause
+    outer:
+      serializedVersion: 2
+      x: 1828
+      y: 1408
+      width: 128
+      height: 128
+    inner:
+      serializedVersion: 2
+      x: 1828
+      y: 1408
+      width: 128
+      height: 128
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: settings
+    outer:
+      serializedVersion: 2
+      x: 1276
+      y: 1327
+      width: 128
+      height: 128
+    inner:
+      serializedVersion: 2
+      x: 1276
+      y: 1327
+      width: 128
+      height: 128
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Coinfinal
+    outer:
+      serializedVersion: 2
+      x: 1828
+      y: 1281
+      width: 126
+      height: 126
+    inner:
+      serializedVersion: 2
+      x: 1828
+      y: 1281
+      width: 126
+      height: 126
+    paddingLeft: 0.007936508
+    paddingRight: 0.007936508
+    paddingTop: 0.007936508
+    paddingBottom: 0.007936508
+  - name: ocean256
+    outer:
+      serializedVersion: 2
+      x: 1276
+      y: 894
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 1276
+      y: 894
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: river256
+    outer:
+      serializedVersion: 2
+      x: 1019
+      y: 942
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 1019
+      y: 942
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: swamp256
+    outer:
+      serializedVersion: 2
+      x: 1019
+      y: 1199
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 1019
+      y: 1199
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: lake256
+    outer:
+      serializedVersion: 2
+      x: 0
+      y: 685
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 0
+      y: 685
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: jungle256
+    outer:
+      serializedVersion: 2
+      x: 1790
+      y: 894
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 1790
+      y: 894
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: down_red_arrow
+    outer:
+      serializedVersion: 2
+      x: 1019
+      y: 1456
+      width: 450
+      height: 592
+    inner:
+      serializedVersion: 2
+      x: 1019
+      y: 1456
+      width: 450
+      height: 592
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: coin icon
+    outer:
+      serializedVersion: 2
+      x: 1470
+      y: 1151
+      width: 357
+      height: 385
+    inner:
+      serializedVersion: 2
+      x: 1470
+      y: 1151
+      width: 357
+      height: 385
+    paddingLeft: 0.33613446
+    paddingRight: 0.33613446
+    paddingTop: 0.20259741
+    paddingBottom: 0.25714287
+  - name: gear
+    outer:
+      serializedVersion: 2
+      x: 1470
+      y: 1537
+      width: 510
+      height: 511
+    inner:
+      serializedVersion: 2
+      x: 1470
+      y: 1537
+      width: 510
+      height: 511
+    paddingLeft: 0
+    paddingRight: 0.003921569
+    paddingTop: 0
+    paddingBottom: 0.0019569471
+  - name: lock
+    outer:
+      serializedVersion: 2
+      x: 1828
+      y: 1152
+      width: 104
+      height: 128
+    inner:
+      serializedVersion: 2
+      x: 1828
+      y: 1152
+      width: 104
+      height: 128
+    paddingLeft: 0.10576923
+    paddingRight: 0.125
+    paddingTop: 0
+    paddingBottom: 0
+  - name: facebook
+    outer:
+      serializedVersion: 2
+      x: 1533
+      y: 894
+      width: 256
+      height: 256
+    inner:
+      serializedVersion: 2
+      x: 1533
+      y: 894
+      width: 256
+      height: 256
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  mCoordinates: 0
+  mPixelSize: 1
+  mReplacement: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
