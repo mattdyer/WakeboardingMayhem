@@ -43,13 +43,13 @@ public class UnityUtil : Uniject.IUtil {
 	    RuntimePlatform.FlashPlayer,
 	    RuntimePlatform.LinuxPlayer,
 	    RuntimePlatform.NaCl,
-        RuntimePlatform.OSXDashboardPlayer,
+        //RuntimePlatform.OSXDashboardPlayer,
         RuntimePlatform.OSXEditor,
         RuntimePlatform.OSXPlayer,
-        RuntimePlatform.OSXWebPlayer,
+        //RuntimePlatform.OSXWebPlayer,
         RuntimePlatform.WindowsEditor,
         RuntimePlatform.WindowsPlayer,
-        RuntimePlatform.WindowsWebPlayer,
+        //RuntimePlatform.WindowsWebPlayer,
 	};
 
     public static T findInstanceOfType<T>() where T : MonoBehaviour {

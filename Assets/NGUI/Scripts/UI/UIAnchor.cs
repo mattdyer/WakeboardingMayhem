@@ -89,7 +89,7 @@ public class UIAnchor : MonoBehaviour
 	{
 		mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
 		mIsWindows = (Application.platform == RuntimePlatform.WindowsPlayer ||
-			Application.platform == RuntimePlatform.WindowsWebPlayer ||
+			//Application.platform == RuntimePlatform.WindowsWebPlayer ||
 			Application.platform == RuntimePlatform.WindowsEditor);
 
 		if (uiCamera == null) uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
