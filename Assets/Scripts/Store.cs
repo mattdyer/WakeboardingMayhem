@@ -94,21 +94,15 @@ public class Store : MonoBehaviour {
 	
 	public void BuyAndEquipBoard()
 	{
-		if(PlayerPrefs.GetInt("board"+currentBoard,0)==0)
-		{
-		if(ReduceCandies(4000))
-		{
-			PlayerPrefs.SetInt("board"+currentBoard,1);
-			PlayerPrefs.SetInt("currentBoard",currentBoard);
-			buyButton.GetComponentInChildren<UILabel>().text="Equiped";
-		}
-		else
-		{
-			LevelListManager.instance.OpenPopInsufficient();
-		}
-		}
-		else
-		{
+		if(PlayerPrefs.GetInt("board"+currentBoard,0)==0){
+			if(ReduceCandies(4000)){
+				PlayerPrefs.SetInt("board"+currentBoard,1);
+				PlayerPrefs.SetInt("currentBoard",currentBoard);
+				buyButton.GetComponentInChildren<UILabel>().text="Equiped";
+			}else{
+				LevelListManager.instance.OpenPopInsufficient();
+			}
+		}else{
 			PlayerPrefs.SetInt("currentBoard",currentBoard);
 			buyButton.GetComponentInChildren<UILabel>().text="Equiped";
 		}

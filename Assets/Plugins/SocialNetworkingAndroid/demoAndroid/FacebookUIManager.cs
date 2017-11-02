@@ -24,7 +24,7 @@ public class FacebookUIManager : MonoBehaviourGUI
 	void Start()
 	{
 		// grab a screenshot for later use
-		Application.CaptureScreenshot( screenshotFilename );
+		ScreenCapture.CaptureScreenshot( screenshotFilename );
 
 		// optionally enable logging of all requests that go through the Facebook class
 		//Facebook.instance.debugRequests = true;
