@@ -553,7 +553,7 @@ PlayerSettings:
   incrementalIl2cppBuild:
     iOS: 1
   additionalIl2CppArgs: 
-  scriptingRuntimeVersion: 0
+  scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
@@ -640,7 +640,7 @@ PlayerSettings:
     Hub: 0
     UNet: 1
   facebookSdkVersion: 7.9.1
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: b6030f0c-21b7-4610-9bcf-32546ca6a6c1
   projectName: Wake Boarding Mayhem
   organizationId: tanqbay-mobile
