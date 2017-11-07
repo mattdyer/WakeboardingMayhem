@@ -99,6 +99,9 @@ public class Store : MonoBehaviour {
 				PlayerPrefs.SetInt("board"+currentBoard,1);
 				PlayerPrefs.SetInt("currentBoard",currentBoard);
 				buyButton.GetComponentInChildren<UILabel>().text="Equiped";
+
+
+
 			}else{
 				LevelListManager.instance.OpenPopInsufficient();
 			}
@@ -110,6 +113,11 @@ public class Store : MonoBehaviour {
 	
 	public void RightBoard()
 	{
+		
+		Storage storage = new Storage();
+
+		storage.StoreValue("testing");
+
 		if(currentBoard<3)
 		{
 			ChangeBoard(++currentBoard);

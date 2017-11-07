@@ -166,54 +166,6 @@ public class LevelListManager : MonoBehaviour {
 		}
 	}
 	
-/*	public int GetTotalGifts(int x)
-	{
-		switch(x)
-		{
-			case 1:return 45;
-			case 2:return 55;
-			case 3:return 65;
-			case 4:return 75;
-			case 5:return 75;
-			
-			case 6:return 45;
-			case 7:return 55;
-			case 8:return 65;
-			case 9:return 75;
-			case 10:return 75;
-			
-			case 11:return 45;
-			case 12:return 55;
-			case 13:return 65;
-			case 14:return 75;
-			case 15:return 75;
-			
-			case 16:return 45;
-			case 17:return 55;
-			case 18:return 65;
-			case 19:return 75;
-			case 20:return 75;
-			
-			case 21:return 45;
-			case 22:return 55;
-			case 23:return 65;
-			case 24:return 75;
-			case 25:return 75;
-			
-			case 26:return 45;
-			case 27:return 55;
-			case 28:return 65;
-			case 29:return 75;
-			case 30:return 75;
-			
-			case 31:return 45;
-			case 32:return 55;
-			case 33:return 65;
-			case 34:return 75;
-			case 35:return 75;
-		}
-		return 0;
-	}*/
 	
 	public void OpenStore()
 	{
@@ -448,31 +400,6 @@ public class LevelListManager : MonoBehaviour {
 		panel.GetComponents<TweenPosition>()[1].eventReceiver=this.gameObject;
 		panel.GetComponents<TweenPosition>()[1].callWhenFinished="DialogClose";
 		
-	//	int x = PlayerPrefs.GetInt("currentLevel",0);
-		
-	//	panel.GetComponent<PopUpLevel>().Gift.GetComponentInChildren<UILabel>().text="Gifts Delivered : "+ PlayerPrefs.GetInt("NumberOfGifts"+x,0) + "/" + GetTotalGifts(x);
-		
-		
-		
-	//	panel.GetComponent<PopUpLevel>().Label.GetComponent<UILabel>().text=GetLevelname(x);
-	//	UISprite[] stars = panel.GetComponent<PopUpLevel>().Gift.GetComponentsInChildren<UISprite>();
-	/*	switch(PlayerPrefs.GetInt("levelMedal"+ x,0))
-				{
-				
-				case 1:
-					stars[0].color=Color.white;
-					break;
-				case 2:
-					stars[0].color=Color.white;
-					stars[1].color=Color.white;
-					break;
-				case 3:
-					stars[0].color=Color.white;
-					stars[1].color=Color.white;
-					stars[2].color=Color.white;
-					break;
-					
-				}*/
 		
 	}
 	

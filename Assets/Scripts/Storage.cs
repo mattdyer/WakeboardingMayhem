@@ -1,4 +1,6 @@
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
@@ -15,39 +17,72 @@ using UnityEngine;
 public class Storage : MonoBehaviour {
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/drive-dotnet-quickstart.json
-    static string[] Scopes = {  DriveService.Scope.DriveReadonly };
-    static string ApplicationName = "Wakeboarding Mayhem";
+    string[] Scopes = {  DriveService.Scope.DriveReadonly };
+    string ApplicationName = "Wakeboarding Mayhem";
+    Task<UserCredential> credential;
 
     //client id
-    //656522469414-4bvr6p7mhu5p627t0bijjvugrfv8a21a.apps.googleusercontent.com
+    string client_id = "656522469414-4bvr6p7mhu5p627t0bijjvugrfv8a21a.apps.googleusercontent.com";
 
     //client secret
-    //Q3W6eF1oge_6jqR1nBVAi9FK
+    string client_secret = "Q3W6eF1oge_6jqR1nBVAi9FK";
 
-    void Start()
-    {
-        UserCredential credential;
+    void Start(){
+        Debug.Log("started");
 
-        using (var stream =
-            new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
-        {
-            string credPath = System.Environment.GetFolderPath(
-                System.Environment.SpecialFolder.Personal);
-            credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
+    }
 
-            credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.Load(stream).Secrets,
+    private async Task<UserCredential> getCredentials(){
+        //FileDataStore dataStore = new FileDataStore("",true);
+
+        ClientSecrets secrets = new ClientSecrets();
+
+        secrets.ClientId = client_id;
+        secrets.ClientSecret = client_secret;
+
+        CancellationTokenSource cts = new CancellationTokenSource();
+        cts.CancelAfter(TimeSpan.FromSeconds(20));
+        CancellationToken ct = cts.Token;
+
+        var result = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                secrets,
                 Scopes,
                 "user",
-                CancellationToken.None,
-                new FileDataStore(credPath, true)).Result;
-            Console.WriteLine("Credential file saved to: " + credPath);
-        }
+                ct);
+
+        return result;
+    }
+
+    /*private UserCredential getCredentialsCodeFlow(){
+        
+        var token = new TokenResponse { RefreshToken = "abc" };
+
+        ClientSecrets secrets = new ClientSecrets();
+
+        secrets.ClientId = client_id;
+        secrets.ClientSecret = client_secret;
+
+        var credentials = new UserCredential(new GoogleAuthorizationCodeFlow(
+            new GoogleAuthorizationCodeFlow.Initializer 
+            {
+                ClientSecrets = secrets
+            }), 
+            "user", 
+            token);
+
+        return credentials;
+    }*/
+
+    public void StoreValue(string valueToStore)
+    {
+        
+
+        var credentials = getCredentials().Result;
 
         // Create Drive API service.
         var service = new DriveService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = credential,
+                HttpClientInitializer = credentials,
                 ApplicationName = ApplicationName,
             });
 
