@@ -55,7 +55,7 @@ public class Storage : MonoBehaviour {
         return result;
     }
 
-    private UserCredential getCredentialsCodeFlow(){
+    /*private UserCredential getCredentialsCodeFlow(){
         
         var token = new TokenResponse { RefreshToken = "4/rH0Wvvq85lWfBH5Z37xJu-LskBL7v0LoKL4sDZVAr1E#" };
 
@@ -73,38 +73,45 @@ public class Storage : MonoBehaviour {
             token);
 
         return credentials;
-    }
+    }*/
 
-    public void StoreValue(string name,string valueToStore)
+    public void StoreValue(string storeAsName,string valueToStore)
     {
         
-        ServicePointManager.ServerCertificateValidationCallback = Validator;
+        DriveService service = getDriveService();
 
-        var credentials = getCredentials().Result;
-
-        //4/7fXeic4JsaB3Rclyu5C63grwJuUTjOMh47npk2HFWyc#
-        //var credentials = getCredentialsCodeFlow();
-
-        Debug.Log(credentials);
-
-        // Create Drive API service.
-        var service = new DriveService(new BaseClientService.Initializer()
+        var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+        {
+            Name = storeAsName + ".txt",
+            Parents = new List<string>()
             {
-                HttpClientInitializer = credentials,
-                ApplicationName = ApplicationName,
-            });
+                "appDataFolder"
+            }
+        };
+       
+        FilesResource.CreateMediaUpload request;
+        
 
-        // Define parameters of request.
+        using (var stream = GenerateStreamFromString(valueToStore))
+        {
+            request = service.Files.Create(
+                fileMetadata, stream, "application/json");
+            request.Fields = "id";
+            request.Upload();
+        }
+        var file = request.ResponseBody;
+        Debug.Log("File ID: " + file.Id);
+    }
+
+
+    public void getValue(string nameToGet){
+        DriveService service = getDriveService();
+
         FilesResource.ListRequest listRequest = service.Files.List();
         listRequest.Spaces = "appDataFolder";
         listRequest.PageSize = 10;
         listRequest.Fields = "nextPageToken, files(id, name)";
-
-        //listRequest.ServerCertificateValidationCallback = Validator;
-
-        //HttpRequestMessage request = listRequest.CreateRequest();
-
-        //Debug.Log(request.Properties);
+        listRequest.Q = "name = '" + nameToGet + ".txt'";
 
         // List files.
         IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
@@ -125,34 +132,16 @@ public class Storage : MonoBehaviour {
 
     }
 
-    public listFiles(){
-        ServicePointManager.ServerCertificateValidationCallback = Validator;
 
-        var credentials = getCredentials().Result;
-
-        //4/7fXeic4JsaB3Rclyu5C63grwJuUTjOMh47npk2HFWyc#
-        //var credentials = getCredentialsCodeFlow();
-
-        Debug.Log(credentials);
-
-        // Create Drive API service.
-        var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credentials,
-                ApplicationName = ApplicationName,
-            });
+    public void listFiles(){
+        
+        DriveService service = getDriveService();
 
         // Define parameters of request.
         FilesResource.ListRequest listRequest = service.Files.List();
         listRequest.Spaces = "appDataFolder";
         listRequest.PageSize = 10;
         listRequest.Fields = "nextPageToken, files(id, name)";
-
-        //listRequest.ServerCertificateValidationCallback = Validator;
-
-        //HttpRequestMessage request = listRequest.CreateRequest();
-
-        //Debug.Log(request.Properties);
 
         // List files.
         IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
@@ -170,6 +159,23 @@ public class Storage : MonoBehaviour {
         {
             Debug.Log("No files found.");
         }
+    }
+
+    private DriveService getDriveService(){
+        
+        ServicePointManager.ServerCertificateValidationCallback = Validator;
+        
+
+        var credentials = getCredentials().Result;
+
+        // Create Drive API service.
+        var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credentials,
+                ApplicationName = ApplicationName,
+            });
+
+        return service;
     }
 
     public static bool Validator(object sender,X509Certificate certificate,X509Chain chain,SslPolicyErrors policyErrors)
@@ -179,8 +185,15 @@ public class Storage : MonoBehaviour {
          return true;
      }
 
-    private void listFiles(){
 
+    private static Stream GenerateStreamFromString(string s)
+    {
+        MemoryStream stream = new MemoryStream();
+        StreamWriter writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
     }
 
 }
