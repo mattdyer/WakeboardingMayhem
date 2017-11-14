@@ -35,7 +35,7 @@ public class Storage : MonoBehaviour {
     }
 
     private async Task<UserCredential> getCredentials(){
-        //FileDataStore dataStore = new FileDataStore("",true);
+        FileDataStore dataStore = new FileDataStore(Application.persistentDataPath,true);
 
         ClientSecrets secrets = new ClientSecrets();
 
@@ -50,7 +50,8 @@ public class Storage : MonoBehaviour {
                 secrets,
                 Scopes,
                 "user",
-                ct);
+                ct,
+                dataStore);
 
         return result;
     }
