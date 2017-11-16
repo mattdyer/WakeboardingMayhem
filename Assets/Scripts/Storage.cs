@@ -37,7 +37,7 @@ public class Storage : MonoBehaviour {
     private async Task<UserCredential> getCredentials(){
         //FileDataStore dataStore = new FileDataStore(Application.persistentDataPath,true);
 
-        PreferencesDataStore dataStore = new PreferencesDataStore();
+        //PreferencesDataStore dataStore = new PreferencesDataStore();
 
         ClientSecrets secrets = new ClientSecrets();
 
@@ -52,31 +52,37 @@ public class Storage : MonoBehaviour {
                 secrets,
                 Scopes,
                 "user",
-                ct,
-                dataStore);
+                ct);
 
         return result;
     }
 
-    /*private UserCredential getCredentialsCodeFlow(){
+    public UserCredential getCredentialsCodeFlow(){
         
-        var token = new TokenResponse { RefreshToken = "4/rH0Wvvq85lWfBH5Z37xJu-LskBL7v0LoKL4sDZVAr1E#" };
+        
 
         ClientSecrets secrets = new ClientSecrets();
 
         secrets.ClientId = client_id;
         secrets.ClientSecret = client_secret;
 
-        var credentials = new UserCredential(new GoogleAuthorizationCodeFlow(
-            new GoogleAuthorizationCodeFlow.Initializer 
+        var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer 
             {
                 ClientSecrets = secrets
-            }), 
+            });
+
+        var url = flow.CreateAuthorizationCodeRequest("http://127.0.0.1");
+
+        Debug.Log(url.Build().AbsoluteUri);
+
+        var token = new TokenResponse { RefreshToken = "4/rH0Wvvq85lWfBH5Z37xJu-LskBL7v0LoKL4sDZVAr1E#" };
+
+        var credentials = new UserCredential(flow, 
             "user", 
             token);
 
         return credentials;
-    }*/
+    }
 
     public void StoreValue(string storeAsName,string valueToStore)
     {
@@ -169,7 +175,7 @@ public class Storage : MonoBehaviour {
         ServicePointManager.ServerCertificateValidationCallback = Validator;
         
 
-        var credentials = getCredentials().Result;
+        var credentials = getCredentialsCodeFlow();
 
         // Create Drive API service.
         var service = new DriveService(new BaseClientService.Initializer()

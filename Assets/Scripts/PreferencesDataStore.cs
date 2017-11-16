@@ -14,7 +14,7 @@ namespace Google.Apis.Util.Store
         
         public PreferencesDataStore()
         {
-            
+            Debug.Log("datastore initialized");
         }
 
         
