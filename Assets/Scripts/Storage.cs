@@ -34,7 +34,7 @@ public class Storage : MonoBehaviour {
 
     }
 
-    private async Task<UserCredential> getCredentials(){
+    /*private async Task<UserCredential> getCredentials(){
         //FileDataStore dataStore = new FileDataStore(Application.persistentDataPath,true);
 
         //PreferencesDataStore dataStore = new PreferencesDataStore();
@@ -55,12 +55,10 @@ public class Storage : MonoBehaviour {
                 ct);
 
         return result;
-    }
+    }*/
 
-    public UserCredential getCredentialsCodeFlow(){
+    public async Task<UserCredential> getCredentialsCodeFlow(){
         
-        
-
         ClientSecrets secrets = new ClientSecrets();
 
         secrets.ClientId = client_id;
@@ -68,14 +66,36 @@ public class Storage : MonoBehaviour {
 
         var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer 
             {
-                ClientSecrets = secrets
+                ClientSecrets = secrets,
+                Scopes = Scopes
             });
 
-        var url = flow.CreateAuthorizationCodeRequest("http://127.0.0.1");
+        if(!PlayerPrefs.HasKey("drivetoken")){
+            
 
-        Debug.Log(url.Build().AbsoluteUri);
+            var server = new LocalServerCodeReceiver();
 
-        var token = new TokenResponse { RefreshToken = "4/rH0Wvvq85lWfBH5Z37xJu-LskBL7v0LoKL4sDZVAr1E#" };
+            Debug.Log(server.RedirectUri);
+
+            var url = flow.CreateAuthorizationCodeRequest(server.RedirectUri);
+            CancellationTokenSource cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.FromSeconds(20));
+            CancellationToken ct = cts.Token;
+
+            Debug.Log(url.Build().AbsoluteUri);
+
+            Application.OpenURL(url.Build().AbsoluteUri);
+
+            var result = await server.ReceiveCodeAsync(url,ct);
+
+            PlayerPrefs.SetString("drivetoken",result.Code);
+
+            Debug.Log(result.Code);
+        }
+
+        Debug.Log(PlayerPrefs.GetString("drivetoken"));
+
+        var token = new TokenResponse { RefreshToken = PlayerPrefs.GetString("drivetoken") };
 
         var credentials = new UserCredential(flow, 
             "user", 
@@ -180,7 +200,7 @@ public class Storage : MonoBehaviour {
         // Create Drive API service.
         var service = new DriveService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = credentials,
+                HttpClientInitializer = credentials.Result,
                 ApplicationName = ApplicationName,
             });
 

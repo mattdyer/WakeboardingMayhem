@@ -134,6 +134,10 @@ public class Store : MonoBehaviour {
 	public void LeftBoard()
 	{
 		
+		PlayerPrefs.DeleteKey("drivetoken");
+
+		//Storage storage = new Storage();
+		//storage.listFiles();
 		
 		if(currentBoard>1)
 		{
