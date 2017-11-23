@@ -116,9 +116,9 @@ public class Store : MonoBehaviour {
 		
 		Storage storage = new Storage();
 
-		storage.getCredentialsCodeFlow();
+		//storage.getCredentialsCodeFlow();
 		//storage.StoreValue("storedValue4","testing more content");
-		//storage.listFiles();
+		storage.listFiles();
 		//storage.getValue("storedValue2");
 
 		if(currentBoard<3)
