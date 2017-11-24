@@ -114,11 +114,11 @@ public class Store : MonoBehaviour {
 	public void RightBoard()
 	{
 		
-		Storage storage = new Storage();
+		//Storage storage = new Storage();
 
 		//storage.getCredentialsCodeFlow();
 		//storage.StoreValue("storedValue4","testing more content");
-		storage.listFiles();
+		//storage.listFiles();
 		//storage.getValue("storedValue2");
 
 		if(currentBoard<3)
