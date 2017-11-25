@@ -16,6 +16,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Net;
 using UnityEngine;
+using Google;
 
 public class Storage : MonoBehaviour {
     
@@ -34,7 +35,22 @@ public class Storage : MonoBehaviour {
 
     }
 
-    private async Task<UserCredential> getCredentials(){
+
+    private async Task<GoogleSignInUser> getCredentials(){
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration {
+          RequestIdToken = true,
+          // Copy this value from the google-service.json file.
+          // oauth_client with type == 3
+          WebClientId = client_id
+        };
+
+        Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn ();
+
+        return signIn.Result;
+    }
+
+
+    /*private async Task<UserCredential> getCredentials(){
         //FileDataStore dataStore = new FileDataStore(Application.persistentDataPath,true);
 
         //PreferencesDataStore dataStore = new PreferencesDataStore();
@@ -55,12 +71,10 @@ public class Storage : MonoBehaviour {
                 ct);
 
         return result;
-    }
+    }*/
 
-    public UserCredential getCredentialsCodeFlow(){
+    public async Task<UserCredential> getCredentialsCodeFlow(){
         
-        
-
         ClientSecrets secrets = new ClientSecrets();
 
         secrets.ClientId = client_id;
@@ -68,14 +82,36 @@ public class Storage : MonoBehaviour {
 
         var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer 
             {
-                ClientSecrets = secrets
+                ClientSecrets = secrets,
+                Scopes = Scopes
             });
 
-        var url = flow.CreateAuthorizationCodeRequest("http://127.0.0.1");
+        if(!PlayerPrefs.HasKey("drivetoken")){
+            
 
-        Debug.Log(url.Build().AbsoluteUri);
+            var server = new LocalServerCodeReceiver();
 
-        var token = new TokenResponse { RefreshToken = "4/rH0Wvvq85lWfBH5Z37xJu-LskBL7v0LoKL4sDZVAr1E#" };
+            Debug.Log(server.RedirectUri);
+
+            var url = flow.CreateAuthorizationCodeRequest(server.RedirectUri);
+            CancellationTokenSource cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.FromSeconds(20));
+            CancellationToken ct = cts.Token;
+
+            Debug.Log(url.Build().AbsoluteUri);
+
+            Application.OpenURL(url.Build().AbsoluteUri);
+
+            var result = await server.ReceiveCodeAsync(url,ct);
+
+            PlayerPrefs.SetString("drivetoken",result.Code);
+
+            Debug.Log(result.Code);
+        }
+
+        Debug.Log(PlayerPrefs.GetString("drivetoken"));
+
+        var token = new TokenResponse { RefreshToken = PlayerPrefs.GetString("drivetoken") };
 
         var credentials = new UserCredential(flow, 
             "user", 
@@ -175,16 +211,65 @@ public class Storage : MonoBehaviour {
         ServicePointManager.ServerCertificateValidationCallback = Validator;
         
 
-        var credentials = getCredentialsCodeFlow();
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration {
+          RequestIdToken = true,
+          // Copy this value from the google-service.json file.
+          // oauth_client with type == 3
+          WebClientId = client_id
+        };
 
-        // Create Drive API service.
-        var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credentials,
-                ApplicationName = ApplicationName,
+        Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn ();
+
+        TaskCompletionSource<DriveService> signInCompleted = new TaskCompletionSource<DriveService> ();
+            signIn.ContinueWith (task => {
+              if (task.IsCanceled) {
+                signInCompleted.SetCanceled ();
+              } else if (task.IsFaulted) {
+                signInCompleted.SetException (task.Exception);
+              } else {
+
+                ClientSecrets secrets = new ClientSecrets();
+
+                secrets.ClientId = client_id;
+                secrets.ClientSecret = client_secret;
+
+                var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer 
+                {
+                    ClientSecrets = secrets,
+                    Scopes = Scopes
+                });
+
+                var token = new TokenResponse { RefreshToken =  ((Task<GoogleSignInUser>)task).Result.IdToken};
+
+                var credentials = new UserCredential(flow, 
+                "user", 
+                token);
+
+                var service = new DriveService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credentials,
+                    ApplicationName = ApplicationName
+                });
+
+                signInCompleted.SetResult(service);
+
+                //UserCredential credential = Google.Apis.Auth.GoogleAuthProvider.GetCredential (((Task<GoogleSignInUser>)task).Result.IdToken, null);
+                /*auth.SignInWithCredentialAsync (credential).ContinueWith (authTask => {
+                  if (authTask.IsCanceled) {
+                    signInCompleted.SetCanceled();
+                  } else if (authTask.IsFaulted) {
+                    signInCompleted.SetException(authTask.Exception);
+                  } else {
+                    signInCompleted.SetResult(((Task<FirebaseUser>)authTask).Result);
+                  }
+                });*/
+              }
             });
 
-        return service;
+        // Create Drive API service.
+        
+
+        return signInCompleted.Task.Result;
     }
 
     public static bool Validator(object sender,X509Certificate certificate,X509Chain chain,SslPolicyErrors policyErrors)
