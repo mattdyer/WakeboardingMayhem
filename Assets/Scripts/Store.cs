@@ -114,9 +114,9 @@ public class Store : MonoBehaviour {
 	public void RightBoard()
 	{
 		
-		//Storage storage = new Storage();
+		Storage storage = new Storage();
 
-		//storage.getCredentialsCodeFlow();
+		storage.getCredentialsCodeFlow();
 		//storage.StoreValue("storedValue4","testing more content");
 		//storage.listFiles();
 		//storage.getValue("storedValue2");
@@ -134,10 +134,6 @@ public class Store : MonoBehaviour {
 	public void LeftBoard()
 	{
 		
-		PlayerPrefs.DeleteKey("drivetoken");
-
-		//Storage storage = new Storage();
-		//storage.listFiles();
 		
 		if(currentBoard>1)
 		{
